@@ -49,43 +49,72 @@ class SecurityPlugin extends Plugin
 				'companies'    => ['index', 'search', 'new', 'edit', 'save', 'create', 'delete'],
 				'products'     => ['index', 'search', 'new', 'edit', 'save', 'create', 'delete'],
 				'producttypes' => ['index', 'search', 'new', 'edit', 'save', 'create', 'delete'],
-				'invoices'     => ['index', 'profile']
+				'invoices'     => ['index', 'profile'],
+				'todos'    => ['index']
 			];
 			foreach ($privateResources as $resource => $actions) {
 				$acl->addResource(new Resource($resource), $actions);
 			}
 
 			//Public area resources
-			$publicResources = [
-				'index'      => ['index'],
-				'about'      => ['index'],
-				'register'   => ['index'],
-				'todos'   => ['index'],
-				'errors'     => ['show401', 'show404', 'show500'],
-				'session'    => ['index', 'register', 'start', 'end'],
-				'contact'    => ['index', 'send'],
-				'contact2'    => ['index', 'send'],
+			// $publicResources = [
+			// 	'index'      => ['index'],
+			// 	'about'      => ['index'],
+			// 	'register'   => ['index'],
+			// 	'todos'      => ['index'],
+			// 	'errors'     => ['show401', 'show404', 'show500'],
+			// 	'session'    => ['index', 'register', 'start', 'end'],
+			// 	'contact'    => ['index', 'send'],
+			// 	'contact2'    => ['index', 'send'],
 
-			];
+			// ];
+			
+// 公開エリアのリソース (フロントエンド)
+$publicResources = array(
+    'index'    => array('index'),
+    'about'    => array('index'),
+	'register' => array('index'),
+	'todos' => array('index'),
+    'errors'   => array('show404', 'show500'),
+    'session'  => array('index', 'register', 'start', 'end'),
+    'contact'  => array('index', 'send')
+);
+
+
 			foreach ($publicResources as $resource => $actions) {
 				$acl->addResource(new Resource($resource), $actions);
 			}
 
-			//Grant access to public areas to both users and guests
-			foreach ($roles as $role) {
-				foreach ($publicResources as $resource => $actions) {
-					foreach ($actions as $action){
-						$acl->allow($role->getName(), $resource, $action);
-					}
-				}
-			}
+			// //Grant access to public areas to both users and guests
+			// foreach ($roles as $role) {
+			// 	foreach ($publicResources as $resource => $actions) {
+			// 		foreach ($actions as $action){
+			// 			$acl->allow($role->getName(), $resource, $action);
+			// 		}
+			// 	}
+			// }
 
-			//Grant access to private area to role Users
-			foreach ($privateResources as $resource => $actions) {
-				foreach ($actions as $action){
-					$acl->allow('Users', $resource, $action);
-				}
-			}
+			// //Grant access to private area to role Users
+			// foreach ($privateResources as $resource => $actions) {
+			// 	foreach ($actions as $action){
+			// 		$acl->allow('Users', $resource, $action);
+			// 	}
+			// }
+
+			// 公開エリアのアクセス権をユーザーとゲストの双方に与える
+foreach ($roles as $role) {
+    foreach ($publicResources as $resource => $actions) {
+        $acl->allow($role->getName(), $resource, '*');
+    }
+}
+
+// ユーザーにだけ、プライベートエリアへのアクセス権を与える
+foreach ($privateResources as $resource => $actions) {
+    foreach ($actions as $action) {
+        $acl->allow('Users', $resource, $action);
+    }
+}
+
 
 			//The acl is stored in session, APC would be useful here too
 			$this->persistent->acl = $acl;

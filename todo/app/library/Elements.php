@@ -15,14 +15,15 @@ class Elements extends Component
                 'caption' => 'Home',
                 'action' => 'index'
             ],
+            'about' => [
+                'caption' => 'Todo',
+                'action' => 'index'
+            ],
             'invoices' => [
                 'caption' => 'Invoices',
                 'action' => 'index'
             ],
-            'about' => [
-                'caption' => 'About',
-                'action' => 'index'
-            ],
+
             'contact' => [
                 'caption' => 'Contact',
                 'action' => 'index'
@@ -31,10 +32,10 @@ class Elements extends Component
                 'caption' => 'Todos',
                 'action' => 'index'
             ],
-            'contact2' => [
-                'caption' => 'Contact2',
-                'action' => 'index'
-            ],
+            // 'contact2' => [
+            //     'caption' => 'Contact2',
+            //     'action' => 'index'
+            // ],
         ],
         'navbar-right' => [
             'session' => [
@@ -52,6 +53,11 @@ class Elements extends Component
         ],
         'Companies' => [
             'controller' => 'companies',
+            'action' => 'index',
+            'any' => true
+        ],
+        'Todos' => [
+            'controller' => 'todos',
             'action' => 'index',
             'any' => true
         ],

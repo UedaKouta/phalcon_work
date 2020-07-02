@@ -1,73 +1,49 @@
 <?php
 
-
-use Phalcon\Mvc\Controller;
-
 class TodosController extends ControllerBase
 {
     public function initialize()
     {
-        $this->tag->setTitle('Contact us');
+        $this->tag->setTitle('About us');
         parent::initialize();
     }
 
     public function indexAction()
     {
-        $this->view->form = new ContactForm;
+        $form = new TodosForm;
+
+    if ($this->request->isPost()) {
+
+        $title = $this->request->getPost('title', ['string', 'striptags']);
+
+        // if ($password != $repeatPassword) {
+        //     $this->flash->error('Passwords are different');
+        //     return false;
+        // }
+
+        $todo = new Todo();
+        $todo->title = $title ;
+        $todo->status = '1';
+        $todo->created = new Phalcon\Db\RawValue('now()');
+        $todo->updated = new Phalcon\Db\RawValue('now()');
+  
+        if ($todo->save() == false) {
+            foreach ($todo->getMessages() as $message) {
+                $this->flash->error((string) $message);
+            }
+        } else {
+            $this->tag->setDefault('title', '');
+            $this->flash->success('登録完了しました。');
+
+            return $this->dispatcher->forward(
+                [
+                    "controller" => "about",
+                    "action"     => "index",
+                ]
+            );
+        }
     }
 
-    /**
-     * Saves the contact information in the database
-     */
-    public function sendAction()
-    {
-        if ($this->request->isPost() != true) {
-            return $this->dispatcher->forward(
-                [
-                    "controller" => "contact",
-                    "action"     => "index",
-                ]
-            );
-        }
-
-        $form = new ContactForm;
-        $contact = new Contact();
-
-        // Validate the form
-        $data = $this->request->getPost();
-        if (!$form->isValid($data, $contact)) {
-            foreach ($form->getMessages() as $message) {
-                $this->flash->error($message);
-            }
-
-            return $this->dispatcher->forward(
-                [
-                    "controller" => "contact",
-                    "action"     => "index",
-                ]
-            );
-        }
-
-        if ($contact->save() == false) {
-            foreach ($contact->getMessages() as $message) {
-                $this->flash->error($message);
-            }
-
-            return $this->dispatcher->forward(
-                [
-                    "controller" => "contact",
-                    "action"     => "index",
-                ]
-            );
-        }
-
-        $this->flash->success('Thanks, we will contact you in the next few hours');
-
-        return $this->dispatcher->forward(
-            [
-                "controller" => "index",
-                "action"     => "index",
-            ]
-        );
-    }
+    $this->view->form = $form;
+}
 }

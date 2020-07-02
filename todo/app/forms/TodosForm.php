@@ -10,39 +10,16 @@ class TodosForm extends Form
 {
     public function initialize($entity = null, $options = null)
     {
-        // Name
-        $name = new Text('name');
-        $name->setLabel('Your Full Name');
-        $name->setFilters(['striptags', 'string']);
-        $name->addValidators([
+        // title
+        $title = new Text('title');
+        $title->setLabel('title');
+        $title->setFilters(['striptags', 'string']);
+        $title->addValidators([
             new PresenceOf([
-                'message' => 'Name is required'
+                'message' => 'title is required'
             ])
         ]);
-        $this->add($name);
+        $this->add($title);
 
-        // Email
-        $email = new Text('email');
-        $email->setLabel('E-Mail');
-        $email->setFilters('email');
-        $email->addValidators([
-            new PresenceOf([
-                'message' => 'E-mail is required'
-            ]),
-            new Email([
-                'message' => 'E-mail is not valid'
-            ])
-        ]);
-        $this->add($email);
-
-        $comments = new TextArea('comments');
-        $comments->setLabel('Comments');
-        $comments->setFilters(['striptags', 'string']);
-        $comments->addValidators([
-            new PresenceOf([
-                'message' => 'Comments is required'
-            ])
-        ]);
-        $this->add($comments);
     }
 }
