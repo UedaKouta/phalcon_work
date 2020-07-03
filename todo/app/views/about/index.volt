@@ -31,15 +31,15 @@
                                 <tr>
                                     <td>{{ todo.id }}</td>
                                     <td>{{ todo.title }}</td>
-                                    {# <td>{{ todo.created|date("Y/m/d H:i:s") }}</td> #}
+                                    <!-- {# <td>{{ todo.created|date("Y/m/d H:i:s") }}</td> #} -->
                                     <td>{{ todo.created }}</td>
                                     <td>
                                         {% if todo.status == 1 %}
-                                            <a class="btn btn-success" href="/done?id={{ todo.id }}">完了</a>
-                                            {# <a class="btn btn-danger" href="/delete?id={{ todo.id }}">削除</a> #}
-                                              {# <a class="btn btn-danger" onClick="kakunin({{ todo.id }})">削除</a>                                             #}
-                                            <a class="btn btn-primary" href="/edit?id={{ todo.id }}">編集</a>
-                                            {# <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#testModal">削除</button>
+                                            <a class="btn btn-success" href="/todo/todos/done/{{ todo.id }}">完了</a>
+                                            <!-- {# <a class="btn btn-danger" href="/delete?id={{ todo.id }}">削除</a> #} -->
+                                              <!-- {# <a class="btn btn-danger" onClick="kakunin({{ todo.id }})">削除</a>                                             #} -->
+                                            <a class="btn btn-primary" href="/todo/about/edit/{{ todo.id }}">編集</a>
+                                            <!-- {# <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#testModal">削除</button>
                                             
                                             <div class="modal fade" id="testModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
                                                 <div class="modal-dialog">
@@ -57,7 +57,7 @@
 
                                                     </div>
                                                 </div>
-                                           </div> #}
+                                           </div> #} -->
 
                                         {% endif %}
                                     </td>

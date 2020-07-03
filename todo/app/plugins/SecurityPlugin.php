@@ -72,7 +72,7 @@ class SecurityPlugin extends Plugin
 // 公開エリアのリソース (フロントエンド)
 $publicResources = array(
     'index'    => array('index'),
-    'about'    => array('index'),
+    'about'    => array('index','edit'),
 	'register' => array('index'),
 	'todos' => array('index'),
     'errors'   => array('show404', 'show500'),
