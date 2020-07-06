@@ -11,9 +11,15 @@ class AboutController extends ControllerBase
         parent::initialize();
     }
 
-    public function indexAction($status = '')
+    public function indexAction($statuspar = '')
     {
         $form = new TodosForm;
+
+        if($statuspar == 1 || $statuspar == 2){
+            $status = $statuspar;
+        } else{
+            $status = '';
+        }
 
         $numberPage = 1;
         if ($status != '') {

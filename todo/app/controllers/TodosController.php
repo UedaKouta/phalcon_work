@@ -8,7 +8,13 @@ class TodosController extends ControllerBase
         parent::initialize();
     }
 
-    public function indexAction()
+
+
+     /**
+     * タスク新規登録の処理
+     */
+    
+     public function indexAction()
     {
         $form = new TodosForm;
 
@@ -42,7 +48,12 @@ class TodosController extends ControllerBase
         $this->view->form = $form;
     }
 
-    public function doneAction($id = '')
+
+     /**
+     * タスク完了の処理
+     */
+    
+     public function doneAction($id = '')
     {
 
     $todo = new Todo();
@@ -79,6 +90,10 @@ class TodosController extends ControllerBase
     }
     }
 
+
+     /**
+     * タスク内容変更の処理
+     */
     public function editAction($id = '')
     {
 
@@ -119,10 +134,8 @@ class TodosController extends ControllerBase
     }
 
 
-    /**
-     * Deletes a company
-     *
-     * @param string $id
+     /**
+     * タスク削除
      */
     public function deleteAction($id)
     {
