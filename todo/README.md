@@ -7,19 +7,26 @@
 * PHP >= 5.6.37
 * phalcon >= 2.0.1
 * MAMP
+* phalcon.so
+https://github.com/majksner/php-phalcon-mamp
 
 
 ### Installation
 
-・DB名
+・DB名 >= 
 phalcon_work
 
-・sql
+・sql >= 
 todo/schemas/invo.sql
 
 ## document root
 
 /Applications/MAMP/htdocs/phalcon_work
+
+
+## 画面
+![min](https://user-images.githubusercontent.com/27049632/86753452-0c69eb80-c07b-11ea-99d2-c1ce2498a4b5.png)
+
 
 ## License
 

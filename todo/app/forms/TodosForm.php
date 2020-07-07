@@ -12,7 +12,7 @@ class TodosForm extends Form
     {
         // title
         $title = new Text('title');
-        $title->setLabel('title');
+        $title->setLabel('Title');
         $title->setFilters(['striptags', 'string']);
         $title->addValidators([
             new PresenceOf([

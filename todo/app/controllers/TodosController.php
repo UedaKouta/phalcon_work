@@ -7,20 +7,24 @@ class TodosController extends ControllerBase
 {
     public function initialize()
     {
-        $this->tag->setTitle('About us');
+        $this->tag->setTitle('Todos');
         parent::initialize();
     }
 
-    public function indexAction($statuspar = '')
+     /**
+     * タスク一覧表示
+     */
+    public function indexAction($statusparam = '')
     {
         $form = new TodosForm;
 
-        if($statuspar == 1 || $statuspar == 2){
-            $status = $statuspar;
+        if($statusparam == 1 || $statusparam == 2){
+            $status = $statusparam;
         } else{
             $status = '';
         }
 
+        //statusにより検索条件となるパラメーターを取得
         $numberPage = 1;
         if ($status != '') {
             $fx['status'] = $status;
@@ -90,48 +94,51 @@ class TodosController extends ControllerBase
         $this->view->form = $form;
     }
 
-
      /**
      * タスク完了の処理
      */
-    
      public function doneAction($id = '')
     {
 
-    $todo = new Todo();
-    $todo = Todo::findFirstById($id);
-    if (!$todo) {
-        $this->flash->error("todo does not exist");
+        $todo = new Todo();
+        $todo = Todo::findFirstById($id);
+        
+        if (!$todo) {
+     
+            $this->flash->error("todo does not exist");
+            return $this->dispatcher->forward(
+                [
+                    "controller" => "todos",
+                    "action"     => "index",
+                ]
+            );
+        }
 
-        return $this->dispatcher->forward(
-            [
-                "controller" => "todos",
-                "action"     => "index",
-            ]
-        );
+        $form = new TodosForm;
+        $todo->status = '2';
+        $todo->updated = new Phalcon\Db\RawValue('now()');
+    
+        if ($todo->save() == false) {
+            foreach ($todo->getMessages() as $message) {
+                $this->flash->error((string) $message);
+            }
+        } else {
+        
+            $this->tag->setDefault('title', '');
+            $this->flash->success('更新しました。');
+    
+            return $this->dispatcher->forward(
+                [
+                    "controller" => "todos",
+                    "action"     => "index",
+                ]
+            );
+        }
     }
 
-    $form = new TodosForm;
-  
-    $todo->status = '2';
-    $todo->updated = new Phalcon\Db\RawValue('now()');
-    if ($todo->save() == false) {
-        foreach ($todo->getMessages() as $message) {
-            $this->flash->error((string) $message);
-    }
-    } else {
-        $this->tag->setDefault('title', '');
-        $this->flash->success('更新しました。');
-
-        return $this->dispatcher->forward(
-            [
-                "controller" => "todos",
-                "action"     => "index",
-            ]
-        );
-    }
-    }
-
+     /**
+     * タスク編集画面へ遷移
+     */
     public function editAction($id = '')
     {
         $form = new TodosForm;
@@ -167,51 +174,50 @@ class TodosController extends ControllerBase
         $this->view->page = $paginator->getPaginate();
     }
 
-        /**
+    /**
      * タスク内容変更の処理
      */
     public function registerAction($id = '')
     {
 
-    $todo = new Todo();
-    $todo = Todo::findFirstById($id);
-    if (!$todo) {
-        $this->flash->error("todo does not exist");
+        $todo = new Todo();
+        $todo = Todo::findFirstById($id);
+        if (!$todo) {
+            $this->flash->error("todo does not exist");
 
-        return $this->dispatcher->forward(
-            [
-                "controller" => "todos",
-                "action"     => "index",
-            ]
-        );
+            return $this->dispatcher->forward(
+                [
+                    "controller" => "todos",
+                    "action"     => "index",
+                ]
+            );
+        }
+
+        $form = new TodosForm;
+        $title = $this->request->getPost('title', ['string', 'striptags']);
+
+        $todo->title = $title ;
+        $todo->updated = new Phalcon\Db\RawValue('now()');
+
+        if ($todo->save() == false) {
+            foreach ($todo->getMessages() as $message) {
+                $this->flash->error((string) $message);
+        }
+        } else {
+            $this->tag->setDefault('title', '');
+            $this->flash->success('更新しました。');
+
+            return $this->dispatcher->forward(
+                [
+                    "controller" => "todos",
+                    "action"     => "index",
+                ]
+            );
+        }
     }
-
-    $form = new TodosForm;
-   
-    $title = $this->request->getPost('title', ['string', 'striptags']);
-
-    $todo->title = $title ;
-    $todo->updated = new Phalcon\Db\RawValue('now()');
-    if ($todo->save() == false) {
-        foreach ($todo->getMessages() as $message) {
-            $this->flash->error((string) $message);
-    }
-    } else {
-        $this->tag->setDefault('title', '');
-        $this->flash->success('更新しました。');
-
-        return $this->dispatcher->forward(
-            [
-                "controller" => "todos",
-                "action"     => "index",
-            ]
-        );
-    }
-    }
-
 
      /**
-     * タスク削除
+     * タスク削除処理
      */
     public function deleteAction($id)
     {
@@ -251,5 +257,4 @@ class TodosController extends ControllerBase
             ]
         );
     }
-
 }

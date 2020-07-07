@@ -55,6 +55,26 @@ var SignUp = {
     }
 }
 
+var TodoTitle = {
+    check: function (id) {
+        if ($.trim($("#" + id)[0].value) == '') {
+            $("#" + id)[0].focus();
+            $("#" + id + "_alert").show();
+
+            return false;
+        };
+
+        return true;
+    },
+    validate: function () {
+        if (TodoTitle.check("title") == false) {
+            return false;
+        }
+
+        $("#todosForm")[0].submit();
+    }
+}
+
 $(document).ready(function () {
     $("#registerForm .alert").hide();
     $("div.profile .alert").hide();

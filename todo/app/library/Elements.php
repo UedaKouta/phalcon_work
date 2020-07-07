@@ -85,6 +85,7 @@ class Elements extends Component
             ];
         } else {
             unset($this->_headerMenu['navbar-left']['invoices']);
+            // unset($this->_headerMenu['navbar-left']['todos']);
         }
 
         $controllerName = $this->view->getControllerName();

@@ -50,7 +50,7 @@ class SecurityPlugin extends Plugin
 				'products'     => ['index', 'search', 'new', 'edit', 'save', 'create', 'delete'],
 				'producttypes' => ['index', 'search', 'new', 'edit', 'save', 'create', 'delete'],
 				'invoices'     => ['index', 'profile'],
-				'todos'    => ['index']
+				'todos'        => ['index']
 			];
 			foreach ($privateResources as $resource => $actions) {
 				$acl->addResource(new Resource($resource), $actions);
@@ -69,16 +69,16 @@ class SecurityPlugin extends Plugin
 
 			// ];
 			
-// 公開エリアのリソース (フロントエンド)
-$publicResources = array(
-    'index'    => array('index'),
-    'about'    => array('index','edit'),
-	'register' => array('index'),
-	'todos' => array('index','edit'),
-    'errors'   => array('show404', 'show500'),
-    'session'  => array('index', 'register', 'start', 'end'),
-    'contact'  => array('index', 'send')
-);
+            // 公開エリアのリソース (フロントエンド)
+            $publicResources = array(
+                'index'    => array('index'),
+                'about'    => array('index','edit'),
+                'register' => array('index'),
+                'todos'    => array('index','edit'),
+                'errors'   => array('show404', 'show500'),
+                'session'  => array('index', 'register', 'start', 'end'),
+                'contact'  => array('index', 'send')
+            );
 
 
 			foreach ($publicResources as $resource => $actions) {
@@ -102,19 +102,18 @@ $publicResources = array(
 			// }
 
 			// 公開エリアのアクセス権をユーザーとゲストの双方に与える
-foreach ($roles as $role) {
-    foreach ($publicResources as $resource => $actions) {
-        $acl->allow($role->getName(), $resource, '*');
-    }
-}
+            foreach ($roles as $role) {
+                foreach ($publicResources as $resource => $actions) {
+                    $acl->allow($role->getName(), $resource, '*');
+                }
+            }
 
-// ユーザーにだけ、プライベートエリアへのアクセス権を与える
-foreach ($privateResources as $resource => $actions) {
-    foreach ($actions as $action) {
-        $acl->allow('Users', $resource, $action);
-    }
-}
-
+            // ユーザーにだけ、プライベートエリアへのアクセス権を与える
+            foreach ($privateResources as $resource => $actions) {
+                foreach ($actions as $action) {
+                    $acl->allow('Users', $resource, $action);
+                }
+            }
 
 			//The acl is stored in session, APC would be useful here too
 			$this->persistent->acl = $acl;
