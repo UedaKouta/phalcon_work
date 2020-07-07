@@ -1,4 +1,7 @@
 <?php
+use Phalcon\Mvc\Model\Criteria;
+use Phalcon\Paginator\Adapter\Model as Paginator;
+
 
 class TodosController extends ControllerBase
 {
@@ -8,13 +11,52 @@ class TodosController extends ControllerBase
         parent::initialize();
     }
 
+    public function indexAction($statuspar = '')
+    {
+        $form = new TodosForm;
 
+        if($statuspar == 1 || $statuspar == 2){
+            $status = $statuspar;
+        } else{
+            $status = '';
+        }
+
+        $numberPage = 1;
+        if ($status != '') {
+            $fx['status'] = $status;
+            $query = Criteria::fromInput($this->di, "Todo", $fx);
+            $this->persistent->searchParams = $query->getParams();
+        } else {
+            $numberPage = $this->request->getQuery("page", "int");
+        }
+
+        $parameters = array();
+        if ($this->persistent->searchParams) {
+            $parameters = $this->persistent->searchParams;
+            $this->persistent->searchParams = null;
+        }
+
+        if($status != ''){
+            $todos = Todo::find($parameters);
+        } else{
+            $todos = Todo::find();
+        }
+
+        $paginator = new Paginator(array(
+            "data"  => $todos,
+            "limit" => 100,
+            "page"  => $numberPage
+        ));
+        $this->view->form = $form;
+        $this->view->status = $status;
+        $this->view->page = $paginator->getPaginate();
+    }
 
      /**
      * タスク新規登録の処理
      */
     
-     public function indexAction()
+     public function insertAction()
     {
         $form = new TodosForm;
 
@@ -38,7 +80,7 @@ class TodosController extends ControllerBase
 
                 return $this->dispatcher->forward(
                     [
-                        "controller" => "about",
+                        "controller" => "todos",
                         "action"     => "index",
                     ]
                 );
@@ -63,7 +105,7 @@ class TodosController extends ControllerBase
 
         return $this->dispatcher->forward(
             [
-                "controller" => "about",
+                "controller" => "todos",
                 "action"     => "index",
             ]
         );
@@ -83,18 +125,52 @@ class TodosController extends ControllerBase
 
         return $this->dispatcher->forward(
             [
-                "controller" => "about",
+                "controller" => "todos",
                 "action"     => "index",
             ]
         );
     }
     }
 
+    public function editAction($id = '')
+    {
+        $form = new TodosForm;
 
-     /**
+        $numberPage = 1;
+        if ($id  != '') {
+            $fx['id'] = $id;
+            $query = Criteria::fromInput($this->di, "Todo", $fx);
+            $this->persistent->searchParams = $query->getParams();
+        } else {
+            $numberPage = $this->request->getQuery("page", "int");
+        }
+
+        $parameters = array();
+        if ($this->persistent->searchParams) {
+            $parameters = $this->persistent->searchParams;
+            $this->persistent->searchParams = null;
+        }
+
+        if($status != ''){
+            $todos = Todo::find($parameters);
+        } else{
+            $todos = Todo::find();
+        }
+
+        $paginator = new Paginator(array(
+            "data"  => $todos,
+            "limit" => 100,
+            "page"  => $numberPage
+        ));
+        $this->view->form = $form;
+        $this->view->id = $id;
+        $this->view->page = $paginator->getPaginate();
+    }
+
+        /**
      * タスク内容変更の処理
      */
-    public function editAction($id = '')
+    public function registerAction($id = '')
     {
 
     $todo = new Todo();
@@ -104,7 +180,7 @@ class TodosController extends ControllerBase
 
         return $this->dispatcher->forward(
             [
-                "controller" => "about",
+                "controller" => "todos",
                 "action"     => "index",
             ]
         );
@@ -126,7 +202,7 @@ class TodosController extends ControllerBase
 
         return $this->dispatcher->forward(
             [
-                "controller" => "about",
+                "controller" => "todos",
                 "action"     => "index",
             ]
         );
@@ -147,7 +223,7 @@ class TodosController extends ControllerBase
     
             return $this->dispatcher->forward(
                 [
-                    "controller" => "about",
+                    "controller" => "todos",
                     "action"     => "index",
                 ]
             );
@@ -160,7 +236,7 @@ class TodosController extends ControllerBase
 
             return $this->dispatcher->forward(
                 [
-                    "controller" => "about",
+                    "controller" => "todos",
                     "action"     => "index",
                 ]
             );
@@ -170,7 +246,7 @@ class TodosController extends ControllerBase
 
         return $this->dispatcher->forward(
             [
-                "controller" => "about",
+                "controller" => "todos",
                 "action"     => "index",
             ]
         );

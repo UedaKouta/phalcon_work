@@ -16,7 +16,7 @@ class Elements extends Component
                 'action' => 'index'
             ],
             'about' => [
-                'caption' => 'Todo',
+                'caption' => 'About',
                 'action' => 'index'
             ],
             'invoices' => [
@@ -29,13 +29,9 @@ class Elements extends Component
                 'action' => 'index'
             ],
             'todos' => [
-                'caption' => 'Todos',
+                'caption' => 'Todo',
                 'action' => 'index'
             ],
-            // 'contact2' => [
-            //     'caption' => 'Contact2',
-            //     'action' => 'index'
-            // ],
         ],
         'navbar-right' => [
             'session' => [
@@ -53,11 +49,6 @@ class Elements extends Component
         ],
         'Companies' => [
             'controller' => 'companies',
-            'action' => 'index',
-            'any' => true
-        ],
-        'Todos' => [
-            'controller' => 'todos',
             'action' => 'index',
             'any' => true
         ],

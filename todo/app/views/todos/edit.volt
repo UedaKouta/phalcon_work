@@ -2,7 +2,7 @@
 
 <ul class="pager">
     <li class="previous pull-left">
-        {{ link_to("about/index", "&larr; Go Back") }}
+        {{ link_to("todos/index", "&larr; Go Back") }}
     </li>
 </ul>
 
@@ -17,7 +17,7 @@
                 <div class="panel-body">
 
                     <!-- {{ form('about/insert', 'id': 'registerForm', 'onbeforesubmit': 'return false') }} -->
-                    {{ form('todos/edit/' ~ id, 'id': 'registerForm', 'onbeforesubmit': 'return false') }}
+                    {{ form('todos/register/' ~ id, 'id': 'registerForm', 'onbeforesubmit': 'return false') }}
                     <fieldset>
                 
 
