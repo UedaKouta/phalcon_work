@@ -25,7 +25,7 @@
                             </div>
                         </div>
                         <div class="form-actions">
-                            {{ submit_button('更新', 'class': 'btn btn-primary', 'onclick': 'return SignUp.validate();') }}
+                            {{ submit_button('更新', 'class': 'btn btn-primary', 'onclick': 'return TodoTitle.validate();') }}
                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#testModal"style="float: right;">削除</button>
                         </div>
                     </fieldset>
