@@ -27,15 +27,15 @@ class Elements extends Component
                 'caption' => 'Invoices',
                 'action' => 'index'
             ],
-
-            'contact' => [
-                'caption' => 'Contact',
-                'action' => 'index'
-            ],
             'todos' => [
                 'caption' => 'Todo',
                 'action' => 'index'
             ],
+            'contact' => [
+                'caption' => 'Contact',
+                'action' => 'index'
+            ],
+
         ],
         'navbar-right' => [
             'session' => [
@@ -89,7 +89,7 @@ class Elements extends Component
             ];
         } else {
             unset($this->_headerMenu['navbar-left']['invoices']);
-            // unset($this->_headerMenu['navbar-left']['todos']);
+            unset($this->_headerMenu['navbar-left']['todos']);
         }
 
         $controllerName = $this->view->getControllerName();
