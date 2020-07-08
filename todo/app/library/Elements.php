@@ -80,7 +80,10 @@ class Elements extends Component
      */
     public function getMenu()
     {
-
+        
+    /* 
+    2020/07/08  Add unset headerMenu todos  by todo
+    */
         $auth = $this->session->get('auth');
         if ($auth) {
             $this->_headerMenu['navbar-right']['session'] = [

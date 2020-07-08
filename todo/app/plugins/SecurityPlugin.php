@@ -44,6 +44,9 @@ class SecurityPlugin extends Plugin
 				$acl->addRole($role);
 			}
 
+			/* 
+             2020/07/08  Add privateResources todos  by todo
+             */
 			//Private area resources
 			$privateResources = [
 				'companies'    => ['index', 'search', 'new', 'edit', 'save', 'create', 'delete'],
