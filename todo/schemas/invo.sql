@@ -153,3 +153,12 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2012-04-10 20:53:38
+
+DROP TABLE IF EXISTS `todo`;
+CREATE TABLE `todo` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `title` varchar(120) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `status` char(10) COLLATE utf8_unicode_ci NOT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
