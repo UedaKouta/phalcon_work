@@ -9,6 +9,10 @@ use Phalcon\Mvc\User\Component;
  */
 class Elements extends Component
 {
+
+    /* 
+    2020/07/08  Add headerMenu todos  by todo
+    */
     private $_headerMenu = [
         'navbar-left' => [
             'index' => [

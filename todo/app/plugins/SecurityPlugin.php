@@ -69,6 +69,10 @@ class SecurityPlugin extends Plugin
 
 			// ];
 			
+			/* 
+            2020/07/08  Add publicResources todos  by todo
+            */
+
             // 公開エリアのリソース (フロントエンド)
             $publicResources = array(
                 'index'    => array('index'),
