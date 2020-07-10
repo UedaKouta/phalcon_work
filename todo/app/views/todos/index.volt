@@ -1,5 +1,5 @@
 <!-- 2020/07/08  Add Todos volt  by todo -->
-<!-- 2020/07/08  modifi form layouts  by todo -->
+<!-- 2020/07/10  modifi form layouts  by todo -->
 {{ content() }}
 
 <h1 class="page-header">タスク</h1>

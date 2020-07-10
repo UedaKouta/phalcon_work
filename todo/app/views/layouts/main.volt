@@ -1,3 +1,4 @@
+<!-- 2020/07/10  modifi  botton class  by todo -->
 <nav class="navbar navbar-default navbar-inverse" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
