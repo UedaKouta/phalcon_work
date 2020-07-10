@@ -81,9 +81,6 @@ class Elements extends Component
     public function getMenu()
     {
         
-    /* 
-    2020/07/08  Add unset headerMenu todos  by todo
-    */
         $auth = $this->session->get('auth');
         if ($auth) {
             $this->_headerMenu['navbar-right']['session'] = [
@@ -92,12 +89,16 @@ class Elements extends Component
             ];
         } else {
             unset($this->_headerMenu['navbar-left']['invoices']);
+            
+            //2020/07/10  Add unset headerMenu todos  by todo  START
             unset($this->_headerMenu['navbar-left']['todos']);
+            //2020/07/10  Add unset headerMenu todos  by todo END
         }
 
+        //2020/07/10  modifi headerMenu layout  by todo  START
         $controllerName = $this->view->getControllerName();
+        echo '<div class="collapse navbar-collapse"　 id="bs-example-navbar-collapse-1">';
         foreach ($this->_headerMenu as $position => $menu) {
-            echo '<div class="nav-collapse">';
             echo '<ul class="nav navbar-nav ', $position, '">';
             foreach ($menu as $controller => $option) {
                 if ($controllerName == $controller) {
@@ -109,8 +110,9 @@ class Elements extends Component
                 echo '</li>';
             }
             echo '</ul>';
-            echo '</div>';
+            
         }
+        echo '</div>';
 
     }
 
