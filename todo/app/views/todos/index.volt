@@ -8,9 +8,9 @@
             <div class="panel-heading">タスク一覧</div>
                 <div class="panel-body">
                     <ul class="nav nav-tabs">
-                        <li role="presentation"{% if status == 0 %} class="active"{% endif %}><a href="/todo/todos/index">all</a></li>
-                        <li role="presentation"{% if status == 1 %} class="active"{% endif %}><a href="/todo/todos/index/1">未完了</a></li>
-                        <li role="presentation"{% if status == 2 %} class="active"{% endif %}><a href="/todo/todos/index/2">完了</a></li>
+                        <li role="presentation"{% if status == TODO_STATUS_ALL %} class="active"{% endif %}><a href="/todo/todos/index">all</a></li>
+                        <li role="presentation"{% if status == TODO_STATUS_ACTIVE %} class="active"{% endif %}><a href="/todo/todos/index/1">未完了</a></li>
+                        <li role="presentation"{% if status == TODO_STATUS_DONE %} class="active"{% endif %}><a href="/todo/todos/index/2">完了</a></li>
                     </ul>
                     {% if page.items %}                                      
                     <table class="table">
@@ -28,7 +28,7 @@
                                 <td>{{ todo.title }}</td>
                                 <td>{{ todo.created }}</td>
                                 <td>
-                                    {% if todo.status == 1 %}
+                                    {% if todo.status == TODO_STATUS_ACTIVE %}
                                     <a class="btn btn-success" href="/todo/todos/done/{{ todo.id }}">完了</a>
                                     <a class="btn btn-primary" href="/todo/todos/edit/{{ todo.id }}">編集</a>
                                     {% endif %}

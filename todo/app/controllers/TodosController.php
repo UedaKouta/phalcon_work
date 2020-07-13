@@ -22,7 +22,7 @@ class TodosController extends ControllerBase
     {
         $form = new TodosForm;
 
-        if($statusparam == 1 || $statusparam == 2){
+        if($statusparam == TODO_STATUS_ACTIVE || $statusparam == TODO_STATUS_DONE){
             $status = $statusparam;
         } else{
             $status = '';
@@ -57,6 +57,9 @@ class TodosController extends ControllerBase
         ));
         $this->view->form = $form;
         $this->view->status = $status;
+        $this->view->TODO_STATUS_ALL = TODO_STATUS_ALL;
+        $this->view->TODO_STATUS_ACTIVE = TODO_STATUS_ACTIVE;
+        $this->view->TODO_STATUS_DONE = TODO_STATUS_DONE;
         $this->view->page = $paginator->getPaginate();
     }
 
@@ -74,7 +77,7 @@ class TodosController extends ControllerBase
 
             $todo = new Todo();
             $todo->title = $title ;
-            $todo->status = '1';
+            $todo->status = TODO_STATUS_ACTIVE;
             $todo->created = new Phalcon\Db\RawValue('now()');
             $todo->updated = new Phalcon\Db\RawValue('now()');
   
@@ -120,7 +123,7 @@ class TodosController extends ControllerBase
         }
 
         $form = new TodosForm;
-        $todo->status = '2';
+        $todo->status = TODO_STATUS_DONE;
         $todo->updated = new Phalcon\Db\RawValue('now()');
     
         if ($todo->save() == false) {
