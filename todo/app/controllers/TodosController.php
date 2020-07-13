@@ -124,7 +124,7 @@ class TodosController extends ControllerBase
 
         $form = new TodosForm;
         $todo->status = TODO_STATUS_DONE;
-        $todo->updated = new Phalcon\Db\RawValue('now()');
+        // $todo->updated = new Phalcon\Db\RawValue('now()');
     
         if ($todo->save() == false) {
             foreach ($todo->getMessages() as $message) {
@@ -207,7 +207,7 @@ class TodosController extends ControllerBase
         $title = $this->request->getPost('title', ['string', 'striptags']);
 
         $todo->title = $title ;
-        $todo->updated = new Phalcon\Db\RawValue('now()');
+        // $todo->updated = new Phalcon\Db\RawValue('now()');
 
         if ($todo->save() == false) {
             foreach ($todo->getMessages() as $message) {
