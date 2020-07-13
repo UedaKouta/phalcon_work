@@ -27,7 +27,6 @@ class Elements extends Component
                 'caption' => 'Invoices',
                 'action' => 'index'
             ],
-
             'contact' => [
                 'caption' => 'Contact',
                 'action' => 'index'

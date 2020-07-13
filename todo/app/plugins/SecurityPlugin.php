@@ -74,15 +74,15 @@ class SecurityPlugin extends Plugin
             */
 
             // 公開エリアのリソース (フロントエンド)
-            $publicResources = array(
-                'index'    => array('index'),
-                'about'    => array('index','edit'),
-                'register' => array('index'),
-                'todos'    => array('index','edit'),
-                'errors'   => array('show404', 'show500'),
-                'session'  => array('index', 'register', 'start', 'end'),
-                'contact'  => array('index', 'send')
-            );
+            $publicResources = [
+                'index'    => ['index'],
+                'about'    => ['index','edit'],
+                'register' => ['index'],
+                'todos'    => ['index','edit'],
+                'errors'   => ['show404', 'show500'],
+                'session'  => ['index', 'register', 'start', 'end'],
+                'contact'  => ['index', 'send']
+			];
 
 
 			foreach ($publicResources as $resource => $actions) {

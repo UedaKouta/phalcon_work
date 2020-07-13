@@ -14,8 +14,9 @@ class TodosController extends ControllerBase
         parent::initialize();
     }
 
-     /**
+    /**
      * タスク一覧表示
+     * @param string $statusparam 表示用タスク　ステータス
      */
     public function indexAction($statusparam = '')
     {
@@ -99,16 +100,17 @@ class TodosController extends ControllerBase
 
      /**
      * タスク完了の処理
+     * @param string $id タスクのID
      */
      public function doneAction($id = '')
     {
 
-        $todo = new Todo();
+        new Todo();
         $todo = Todo::findFirstById($id);
         
         if (!$todo) {
      
-            $this->flash->error("todo does not exist");
+            $this->flash->error('todo does not exist');
             return $this->dispatcher->forward(
                 [
                     "controller" => "todos",
@@ -141,6 +143,7 @@ class TodosController extends ControllerBase
 
      /**
      * タスク編集画面へ遷移
+     * @param string $id タスクのID
      */
     public function editAction($id = '')
     {
@@ -179,11 +182,12 @@ class TodosController extends ControllerBase
 
     /**
      * タスク内容変更の処理
+     * @param string $id タスクのID
      */
     public function registerAction($id = '')
     {
 
-        $todo = new Todo();
+        new Todo();
         $todo = Todo::findFirstById($id);
         if (!$todo) {
             $this->flash->error("todo does not exist");
@@ -221,14 +225,15 @@ class TodosController extends ControllerBase
 
      /**
      * タスク削除処理
+     * @param string $id タスクのID
      */
     public function deleteAction($id)
     {
 
-        $todo = new Todo();
+        new Todo();
         $todo = Todo::findFirstById($id);
         if (!$todo) {
-            $this->flash->error("todo does not exist");
+            $this->flash->error('todo does not exist');
     
             return $this->dispatcher->forward(
                 [
@@ -251,7 +256,7 @@ class TodosController extends ControllerBase
             );
         }
 
-        $this->flash->success("id:".$id."  was deleted");
+        $this->flash->success('id:' . $id . ' was deleted');
 
         return $this->dispatcher->forward(
             [
