@@ -38,23 +38,9 @@ class TodosController extends ControllerBase
             $numberPage = $this->request->getQuery("page", "int");
         }
 
-        $parameters = array();
-        if ($this->persistent->searchParams) {
-            $parameters = $this->persistent->searchParams;
-            $this->persistent->searchParams = null;
-        }
+        //paginator取得共通処理
+        $paginator  = $this->_paginatorTodos($this,$numberPage,$status);
 
-        if($status != ''){
-            $todos = Todo::find($parameters);
-        } else{
-            $todos = Todo::find();
-        }
-
-        $paginator = new Paginator(array(
-            "data"  => $todos,
-            "limit" => 100,
-            "page"  => $numberPage
-        ));
         $this->view->form = $form;
         $this->view->status = $status;
         $this->view->TODO_STATUS_ALL = TODO_STATUS_ALL;
@@ -73,31 +59,42 @@ class TodosController extends ControllerBase
 
         if ($this->request->isPost()) {
 
-            $title = $this->request->getPost('title', ['string', 'striptags']);
+            //csrf対策チェック　　2020/07/08 by todo
+            if ($this->security->checkToken()) {
+                $title = $this->request->getPost('title', ['string', 'striptags']);
 
-            $todo = new Todo();
-            $todo->title = $title ;
-            $todo->status = TODO_STATUS_ACTIVE;
-            $todo->created = new Phalcon\Db\RawValue('now()');
-            $todo->updated = new Phalcon\Db\RawValue('now()');
+                $todo = new Todo();
+                $todo->title = $title ;
+                $todo->status = TODO_STATUS_ACTIVE;
+                $todo->created = new Phalcon\Db\RawValue('now()');
+                $todo->updated = new Phalcon\Db\RawValue('now()');
   
-            if ($todo->save() == false) {
-                foreach ($todo->getMessages() as $message) {
-                    $this->flash->error((string) $message);
-            }
-            } else {
-                $this->tag->setDefault('title', '');
-                $this->flash->success('登録完了しました。');
+                if ($todo->save() == false) {
+                    foreach ($todo->getMessages() as $message) {
+                        $this->flash->error((string) $message);
+                }
+                } else {
+                    $this->tag->setDefault('title', '');
+                    $this->flash->success('登録完了しました。');
 
-                return $this->dispatcher->forward(
+                    return $this->dispatcher->forward(
+                        [
+                            "controller" => "todos",
+                            "action"     => "index",
+                        ]
+                    );
+                }
+            }else{
+
+                $this->dispatcher->forward(
                     [
-                        "controller" => "todos",
-                        "action"     => "index",
+                        'controller' => 'errors',
+                        'action'     => 'show403'
                     ]
                 );
+                return false;
             }
         }
-
         $this->view->form = $form;
     }
 
@@ -124,7 +121,6 @@ class TodosController extends ControllerBase
 
         $form = new TodosForm;
         $todo->status = TODO_STATUS_DONE;
-        // $todo->updated = new Phalcon\Db\RawValue('now()');
     
         if ($todo->save() == false) {
             foreach ($todo->getMessages() as $message) {
@@ -161,23 +157,9 @@ class TodosController extends ControllerBase
             $numberPage = $this->request->getQuery("page", "int");
         }
 
-        $parameters = array();
-        if ($this->persistent->searchParams) {
-            $parameters = $this->persistent->searchParams;
-            $this->persistent->searchParams = null;
-        }
+        //paginator取得共通処理      
+        $paginator  = $this->_paginatorTodos($this,$numberPage,$status);
 
-        if($status != ''){
-            $todos = Todo::find($parameters);
-        } else{
-            $todos = Todo::find();
-        }
-
-        $paginator = new Paginator(array(
-            "data"  => $todos,
-            "limit" => 100,
-            "page"  => $numberPage
-        ));
         $this->view->form = $form;
         $this->view->id = $id;
         $this->view->page = $paginator->getPaginate();
@@ -190,39 +172,52 @@ class TodosController extends ControllerBase
     public function registerAction($id = '')
     {
 
-        new Todo();
-        $todo = Todo::findFirstById($id);
-        if (!$todo) {
-            $this->flash->error("todo does not exist");
+        //csrf対策チェック　　2020/07/08 by todo
+        if ($this->security->checkToken()) {
+            
+            new Todo();
+            $todo = Todo::findFirstById($id);
+            if (!$todo) {
+                $this->flash->error("todo does not exist");
 
-            return $this->dispatcher->forward(
+                return $this->dispatcher->forward(
+                    [
+                        "controller" => "todos",
+                        "action"     => "index",
+                    ]
+                );
+            }
+
+            $form = new TodosForm;
+            $title = $this->request->getPost('title', ['string', 'striptags']);
+
+            $todo->title = $title ;
+            // $todo->updated = new Phalcon\Db\RawValue('now()');
+
+            if ($todo->save() == false) {
+                foreach ($todo->getMessages() as $message) {
+                    $this->flash->error((string) $message);
+            }
+            } else {
+                $this->tag->setDefault('title', '');
+                $this->flash->success('更新しました。');
+
+                return $this->dispatcher->forward(
+                    [
+                        "controller" => "todos",
+                        "action"     => "index",
+                    ]
+                );
+            }
+
+        }else{
+            $this->dispatcher->forward(
                 [
-                    "controller" => "todos",
-                    "action"     => "index",
+                'controller' => 'errors',
+                'action'     => 'show403'
                 ]
             );
-        }
-
-        $form = new TodosForm;
-        $title = $this->request->getPost('title', ['string', 'striptags']);
-
-        $todo->title = $title ;
-        // $todo->updated = new Phalcon\Db\RawValue('now()');
-
-        if ($todo->save() == false) {
-            foreach ($todo->getMessages() as $message) {
-                $this->flash->error((string) $message);
-        }
-        } else {
-            $this->tag->setDefault('title', '');
-            $this->flash->success('更新しました。');
-
-            return $this->dispatcher->forward(
-                [
-                    "controller" => "todos",
-                    "action"     => "index",
-                ]
-            );
+            return false;
         }
     }
 
@@ -267,5 +262,34 @@ class TodosController extends ControllerBase
                 "action"     => "index",
             ]
         );
+    }
+
+    /**
+     * タスク一覧表示共通処理
+     * @param string $datas タスク一覧処理のデータ
+     * @param string $numberPage 表示表示画面ページ番号
+     * @param string $status 表示用タスク　ステータス
+     */
+    private function _paginatorTodos($datas,$numberPage,$status)
+    {
+        $parameters = array($datas,$numberPage);
+        if ($datas->persistent->searchParams) {
+            $parameters = $datas->persistent->searchParams;
+            $datas->persistent->searchParams = null;
+        }
+        
+        if($status != ''){
+            $todos = Todo::find($parameters);
+        } else{
+            $todos = Todo::find();
+        }
+        
+        $paginator = new Paginator(array(
+            "data"  => $todos,
+            "limit" => 100,
+            "page"  => $numberPage
+        ));
+        
+        return $paginator;
     }
 }

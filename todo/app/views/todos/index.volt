@@ -60,6 +60,7 @@
                                  </div>
                                 </div>
                         </div>
+                        <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>"value="<?php echo $this->security->getToken() ?>"/>
                         <div class="form-actions">
                         {{ submit_button('登録', 'class': 'btn btn-primary', 'onclick': 'return TodoTitle.validate();') }}
                         </div>

@@ -79,7 +79,7 @@ class SecurityPlugin extends Plugin
                 'about'    => ['index','edit'],
                 'register' => ['index'],
                 'todos'    => ['index','edit'],
-                'errors'   => ['show404', 'show500'],
+                'errors'   => ['show403', 'show404', 'show500'],
                 'session'  => ['index', 'register', 'start', 'end'],
                 'contact'  => ['index', 'send']
 			];

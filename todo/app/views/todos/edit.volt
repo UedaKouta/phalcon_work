@@ -26,6 +26,7 @@
                                 </div>
                             </div>
                         </div>
+                        <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>"value="<?php echo $this->security->getToken() ?>"/>
                         <div class="form-actions">
                             {{ submit_button('更新', 'class': 'btn btn-primary', 'onclick': 'return TodoTitle.validate();') }}
                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#testModal"style="float: right;">削除</button>
