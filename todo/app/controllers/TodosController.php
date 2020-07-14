@@ -8,6 +8,11 @@ use Phalcon\Paginator\Adapter\Model as Paginator;
 
 class TodosController extends ControllerBase
 {
+    // common
+    const TODO_STATUS_ACTIVE = 1;
+    const TODO_STATUS_DONE = 2;
+    const TODO_STATUS_ALL = 0;
+        
     public function initialize()
     {
         $this->tag->setTitle('Todos');
@@ -22,7 +27,7 @@ class TodosController extends ControllerBase
     {
         $form = new TodosForm;
 
-        if($statusparam == TODO_STATUS_ACTIVE || $statusparam == TODO_STATUS_DONE){
+        if($statusparam == constant('TodosController::TODO_STATUS_ACTIVE') || $statusparam == constant('TodosController::TODO_STATUS_DONE')){
             $status = $statusparam;
         } else{
             $status = '';
@@ -43,9 +48,10 @@ class TodosController extends ControllerBase
 
         $this->view->form = $form;
         $this->view->status = $status;
-        $this->view->TODO_STATUS_ALL = TODO_STATUS_ALL;
-        $this->view->TODO_STATUS_ACTIVE = TODO_STATUS_ACTIVE;
-        $this->view->TODO_STATUS_DONE = TODO_STATUS_DONE;
+        $this->view->TODO_STATUS_ALL = constant('TodosController::TODO_STATUS_ALL');
+        $this->view->TODO_STATUS_ACTIVE = constant('TodosController::TODO_STATUS_ACTIVE');
+        $this->view->TODO_STATUS_DONE = constant('TodosController::TODO_STATUS_DONE');
+     
         $this->view->page = $paginator->getPaginate();
     }
 
@@ -65,7 +71,7 @@ class TodosController extends ControllerBase
 
                 $todo = new Todo();
                 $todo->title = $title ;
-                $todo->status = TODO_STATUS_ACTIVE;
+                $todo->status = constant('TodosController::TODO_STATUS_ACTIVE');
                 $todo->created = new Phalcon\Db\RawValue('now()');
                 $todo->updated = new Phalcon\Db\RawValue('now()');
   
@@ -120,7 +126,7 @@ class TodosController extends ControllerBase
         }
 
         $form = new TodosForm;
-        $todo->status = TODO_STATUS_DONE;
+        $todo->status = constant('TodosController::TODO_STATUS_DONE');
     
         if ($todo->save() == false) {
             foreach ($todo->getMessages() as $message) {

@@ -12,6 +12,7 @@
                         <li role="presentation"{% if status == TODO_STATUS_ACTIVE %} class="active"{% endif %}><a href="/todo/todos/index/1">未完了</a></li>
                         <li role="presentation"{% if status == TODO_STATUS_DONE %} class="active"{% endif %}><a href="/todo/todos/index/2">完了</a></li>
                     </ul>
+                    
                     {% if page.items %}                                      
                     <table class="table">
                         <thead>
