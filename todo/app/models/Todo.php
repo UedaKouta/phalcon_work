@@ -2,9 +2,11 @@
 
 use Phalcon\Mvc\Model;
 
-/**
- * Products
+
+/* 
+2020/07/08  Add TodoModel  by todo
  */
+
 class Todo extends Model
 {
 	/**
@@ -32,39 +34,13 @@ class Todo extends Model
 	 */
 	public $updated;
 
-	/**
-	 * Products initializer
-	 */
-	// public function initialize()
-	// {
-	// 	$this->belongsTo('status', [
-	// 		'reusable' => true
-	// 	]);
-	// }
+/* 
+2020/07/13  Add beforeUpdate  by todo
+*/
+	public function beforeUpdate()
+    {
+        // Set the modification date
+        $this->updated = new Phalcon\Db\RawValue('now()');
+    }
 
-	/**
-	 * Returns a human representation of 'active'
-	 *
-	 * @return string
-	 */
-	// public function getActiveDetail()
-	// {
-	// 	if ($this->active == 'Y') {
-	// 		return 'Yes';
-	// 	}
-	// 	return 'No';
-	// }
-
-	// public function validation()
-    // {
-    //     $validator = new Validation();
-        
-    //     $validator->add(
-    //         'email',
-    //         new EmailValidator([
-    //         'message' => 'Invalid email given'
-    //     ]));
-        
-    //     return $this->validate($validator);
-    // }
 }

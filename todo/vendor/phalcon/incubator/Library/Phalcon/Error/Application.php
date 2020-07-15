@@ -70,7 +70,15 @@ class Application extends \Phalcon\Mvc\Application
     private function registerAutoloaders()
     {
         $loader = new Loader();
-        $loader->registerNamespaces(['Phalcon\Error' => '.']);
+        // $loader->registerNamespaces(['Phalcon\Error' => '.']);
+
+        $loader->registerNamespaces(
+            array(
+                'Todo\Controllers' => '../app/controllers/',
+                'Phalcon\Error' => '.',
+            )
+        );
+
         $loader->register();
     }
 

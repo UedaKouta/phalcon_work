@@ -1,3 +1,5 @@
+<!-- 2020/07/08  Add Todos volt  by todo -->
+<!-- 2020/07/10  modifi form layouts  by todo -->
 {{ content() }}
 
 <h1 class="page-header">タスク</h1>
@@ -7,10 +9,11 @@
             <div class="panel-heading">タスク一覧</div>
                 <div class="panel-body">
                     <ul class="nav nav-tabs">
-                        <li role="presentation"{% if status == 0 %} class="active"{% endif %}><a href="/todo/todos/index">all</a></li>
-                        <li role="presentation"{% if status == 1 %} class="active"{% endif %}><a href="/todo/todos/index/1">未完了</a></li>
-                        <li role="presentation"{% if status == 2 %} class="active"{% endif %}><a href="/todo/todos/index/2">完了</a></li>
+                        <li role="presentation"{% if status == TODO_STATUS_ALL %} class="active"{% endif %}><a href="/todo/todos/index">all</a></li>
+                        <li role="presentation"{% if status == TODO_STATUS_ACTIVE %} class="active"{% endif %}><a href="/todo/todos/index/1">未完了</a></li>
+                        <li role="presentation"{% if status == TODO_STATUS_DONE %} class="active"{% endif %}><a href="/todo/todos/index/2">完了</a></li>
                     </ul>
+                    
                     {% if page.items %}                                      
                     <table class="table">
                         <thead>
@@ -27,7 +30,7 @@
                                 <td>{{ todo.title }}</td>
                                 <td>{{ todo.created }}</td>
                                 <td>
-                                    {% if todo.status == 1 %}
+                                    {% if todo.status == TODO_STATUS_ACTIVE %}
                                     <a class="btn btn-success" href="/todo/todos/done/{{ todo.id }}">完了</a>
                                     <a class="btn btn-primary" href="/todo/todos/edit/{{ todo.id }}">編集</a>
                                     {% endif %}
@@ -50,7 +53,7 @@
                 <div class="panel-body">
                     {{ form('todos/insert', 'id': 'registerForm', 'onbeforesubmit': 'return false') }}
                         <fieldset>
-                        <div class="control-group">
+                        <div class="form-group">
                             {{ form.label('title', ['class': 'control-label']) }}
                                 <div class="controls">
                                  {{ form.render('title', ['class': 'form-control']) }}
@@ -59,7 +62,8 @@
                                  </div>
                                 </div>
                         </div>
-                        <div class="form-actions">
+                        <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>"value="<?php echo $this->security->getToken() ?>"/>
+                        <div class="form-group">
                         {{ submit_button('登録', 'class': 'btn btn-primary', 'onclick': 'return TodoTitle.validate();') }}
                         </div>
                         </fieldset>

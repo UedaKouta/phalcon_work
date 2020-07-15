@@ -1,3 +1,5 @@
+<!-- 2020/07/08  Add Todos volt  by todo -->
+<!-- 2020/07/08  modifi form layouts  by todo -->
 {{ content() }}
 
 <ul class="pager">
@@ -15,16 +17,17 @@
                 <div class="panel-body">
                     {{ form('todos/register/' ~ id, 'id': 'registerForm', 'onbeforesubmit': 'return false') }}
                     <fieldset>               
-                        <div class="control-group">
+                        <div class="form-group">
                             {{ form.label('title', ['class': 'control-label']) }}
                             <div class="controls">
                                 {{ form.render('title', ['class': 'form-control']) }}
-                                <div class="alert alert-warning" id="password_alert">
-                                    <strong>Warning!</strong> Please provide a valid password
+                                <div class="alert alert-warning" id="title_alert">
+                                    入力してください。
                                 </div>
                             </div>
                         </div>
-                        <div class="form-actions">
+                        <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>"value="<?php echo $this->security->getToken() ?>"/>
+                        <div class="form-group">
                             {{ submit_button('更新', 'class': 'btn btn-primary', 'onclick': 'return TodoTitle.validate();') }}
                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#testModal"style="float: right;">削除</button>
                         </div>

@@ -44,13 +44,16 @@ class SecurityPlugin extends Plugin
 				$acl->addRole($role);
 			}
 
+			/* 
+             2020/07/08  Add privateResources todos  by todo
+             */
 			//Private area resources
 			$privateResources = [
 				'companies'    => ['index', 'search', 'new', 'edit', 'save', 'create', 'delete'],
 				'products'     => ['index', 'search', 'new', 'edit', 'save', 'create', 'delete'],
 				'producttypes' => ['index', 'search', 'new', 'edit', 'save', 'create', 'delete'],
 				'invoices'     => ['index', 'profile'],
-				'todos'        => ['index']
+				'todos'        => ['index', 'insert','edit', 'delete','done','register']
 			];
 			foreach ($privateResources as $resource => $actions) {
 				$acl->addResource(new Resource($resource), $actions);
@@ -69,16 +72,20 @@ class SecurityPlugin extends Plugin
 
 			// ];
 			
+			/* 
+            2020/07/08  Add publicResources todos  by todo
+            */
+
             // 公開エリアのリソース (フロントエンド)
-            $publicResources = array(
-                'index'    => array('index'),
-                'about'    => array('index','edit'),
-                'register' => array('index'),
-                'todos'    => array('index','edit'),
-                'errors'   => array('show404', 'show500'),
-                'session'  => array('index', 'register', 'start', 'end'),
-                'contact'  => array('index', 'send')
-            );
+            $publicResources = [
+                'index'    => ['index'],
+                'about'    => ['index','edit'],
+                'register' => ['index'],
+                'todos'    => ['index','edit'],
+                'errors'   => ['show403', 'show404', 'show500'],
+                'session'  => ['index', 'register', 'start', 'end'],
+                'contact'  => ['index', 'send']
+			];
 
 
 			foreach ($publicResources as $resource => $actions) {

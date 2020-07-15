@@ -54,7 +54,9 @@ var SignUp = {
         $("#registerForm")[0].submit();
     }
 }
-
+/* 
+2020/07/08  Add TodoTitle function by todo
+ */
 var TodoTitle = {
     check: function (id) {
         if ($.trim($("#" + id)[0].value) == '') {
