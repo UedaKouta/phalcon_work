@@ -88,7 +88,9 @@ class Elements extends Component
             ];
         } else {
             unset($this->_headerMenu['navbar-left']['invoices']);
-            // unset($this->_headerMenu['navbar-left']['todos']);
+            //2020/07/10  Add unset headerMenu todos  by todo  START
+            unset($this->_headerMenu['navbar-left']['todos']);
+            //2020/07/10  Add unset headerMenu todos  by todo  END
         }
 
         $controllerName = $this->view->getControllerName();
