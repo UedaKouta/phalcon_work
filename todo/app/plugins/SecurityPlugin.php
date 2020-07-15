@@ -44,13 +44,16 @@ class SecurityPlugin extends Plugin
 				$acl->addRole($role);
 			}
 
+			/* 
+             2020/07/08  Add privateResources todos  by todo
+             */
 			//Private area resources
 			$privateResources = [
 				'companies'    => ['index', 'search', 'new', 'edit', 'save', 'create', 'delete'],
 				'products'     => ['index', 'search', 'new', 'edit', 'save', 'create', 'delete'],
 				'producttypes' => ['index', 'search', 'new', 'edit', 'save', 'create', 'delete'],
 				'invoices'     => ['index', 'profile'],
-				'todos'        => ['index']
+				'todos'        => ['index', 'insert','edit', 'delete','done','register']
 			];
 			foreach ($privateResources as $resource => $actions) {
 				$acl->addResource(new Resource($resource), $actions);
