@@ -17,19 +17,19 @@ class Elements extends Component
         'navbar-left' => [
             'index' => [
                 'caption' => 'Home',
-                'action' => 'index'
+                'action' => 'index',
             ],
             'about' => [
                 'caption' => 'About',
-                'action' => 'index'
+                'action' => 'index',
             ],
             'invoices' => [
                 'caption' => 'Invoices',
-                'action' => 'index'
+                'action' => 'index',
             ],
             'todos' => [
                 'caption' => 'Todo',
-                'action' => 'index'
+                'action' => 'index',
             ],
             'contact' => [
                 'caption' => 'Contact',
@@ -40,7 +40,7 @@ class Elements extends Component
         'navbar-right' => [
             'session' => [
                 'caption' => 'Log In/Sign Up',
-                'action' => 'index'
+                'action' => 'index',
             ],
         ]
     ];

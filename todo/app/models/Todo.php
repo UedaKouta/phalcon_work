@@ -34,5 +34,13 @@ class Todo extends Model
 	 */
 	public $updated;
 
+/* 
+2020/07/13  Add beforeUpdate  by todo
+*/
+	public function beforeUpdate()
+    {
+        // Set the modification date
+        $this->updated = new Phalcon\Db\RawValue('now()');
+    }
 
 }

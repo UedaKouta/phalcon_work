@@ -22,6 +22,10 @@ class ErrorsController extends ControllerBase
     {
 
     }
+    public function show403Action()
+    {
+
+    }
 
     public function show500Action()
     {
