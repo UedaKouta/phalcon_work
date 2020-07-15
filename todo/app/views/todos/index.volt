@@ -52,7 +52,7 @@
                 <div class="panel-body">
                     {{ form('todos/insert', 'id': 'registerForm', 'onbeforesubmit': 'return false') }}
                         <fieldset>
-                        <div class="control-group">
+                        <div class="form-group">
                             {{ form.label('title', ['class': 'control-label']) }}
                                 <div class="controls">
                                  {{ form.render('title', ['class': 'form-control']) }}
@@ -62,7 +62,7 @@
                                 </div>
                         </div>
                         <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>"value="<?php echo $this->security->getToken() ?>"/>
-                        <div class="form-actions">
+                        <div class="form-group">
                         {{ submit_button('登録', 'class': 'btn btn-primary', 'onclick': 'return TodoTitle.validate();') }}
                         </div>
                         </fieldset>
