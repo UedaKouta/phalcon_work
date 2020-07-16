@@ -50,7 +50,7 @@ class SecurityPlugin extends Plugin
 				'products'     => ['index', 'search', 'new', 'edit', 'save', 'create', 'delete'],
 				'producttypes' => ['index', 'search', 'new', 'edit', 'save', 'create', 'delete'],
 				'invoices'     => ['index', 'profile'],
-				'todos'        => ['index']
+				'todos'        => ['index', 'insert','edit', 'delete','done','register','serch']
 			];
 			foreach ($privateResources as $resource => $actions) {
 				$acl->addResource(new Resource($resource), $actions);
@@ -78,7 +78,7 @@ class SecurityPlugin extends Plugin
                 'index'    => ['index'],
                 'about'    => ['index','edit'],
                 'register' => ['index'],
-                'todos'    => ['index','edit'],
+                'todos'    => ['index','edit','serch'],
                 'errors'   => ['show403', 'show404', 'show500'],
                 'session'  => ['index', 'register', 'start', 'end'],
                 'contact'  => ['index', 'send']

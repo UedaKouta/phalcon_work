@@ -1,7 +1,6 @@
 <!-- 2020/07/08  Add Todos volt  by todo -->
 {{ content() }}
 
-<h1 class="page-header">タスク</h1>
 <div class="row">
     <div class="col-sm-8">
         <div class="panel panel-default">
@@ -67,6 +66,39 @@
                         </div>
                         </fieldset>
                     </form>                
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">検索</div>
+                <div class="panel-body">
+                    {{ form('todos/serch', 'id': 'registerForm', 'onbeforesubmit': 'return false') }}
+                        <fieldset>
+                        <div class="form-group">
+                            {{ serchform.label('id', ['class': 'control-label']) }}
+                                <div class="controls">
+                                 {{ serchform.render('id', ['class': 'form-control']) }}
+                                </div>
+                        </div>
+                        <div class="form-group">
+                            {{ serchform.label('title', ['class': 'control-label']) }}
+                                <div class="controls">
+                                 {{ serchform.render('title', ['class': 'form-control']) }}
+                                </div>
+                        </div>
+                        <div class="form-group">
+                            {{ serchform.label('status', ['class': 'control-label']) }}
+                                <div class="controls">
+                                 {{ serchform.render('status', ['class': 'form-control']) }}
+                                </div>
+                        </div>
+                        <div class="form-group">
+                        {{ submit_button('検索', 'class': 'btn btn-primary') }}
+                        </div>
+                        </fieldset>
+                    </form>
                 </div>
             </div>
         </div>
