@@ -27,7 +27,7 @@ todo/schemas/invo.sql
 ## 画面
 ![min](https://user-images.githubusercontent.com/27049632/87654282-9f98d480-c791-11ea-9ee5-2b1956a5abf7.png)
 
-
+![min](https://user-images.githubusercontent.com/27049632/87654554-0ae2a680-c792-11ea-97a8-c081a80ce128.png)
 ## License
 
 Invo is open-sourced software licensed under the [New BSD License][8]. © Phalcon Framework Team and contributors
