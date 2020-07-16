@@ -25,7 +25,7 @@ todo/schemas/invo.sql
 
 
 ## 画面
-![min](https://user-images.githubusercontent.com/27049632/86753452-0c69eb80-c07b-11ea-99d2-c1ce2498a4b5.png)
+![min](https://user-images.githubusercontent.com/27049632/87654282-9f98d480-c791-11ea-9ee5-2b1956a5abf7.png)
 
 
 ## License
