@@ -1,4 +1,5 @@
-<nav class="navbar navbar-default navbar-inverse" role="navigation">
+<header>
+<nav class="navbar navbar-default navbar-inverse header01" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -13,7 +14,7 @@
         {{ elements.getMenu() }}
     </div>
 </nav>
-
+</header>
 <div class="container">
     {{ flash.output() }}
     {{ content() }}

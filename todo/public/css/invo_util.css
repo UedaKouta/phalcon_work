@@ -1,0 +1,6 @@
+.header01 {
+    position: fixed;
+    overflow: hidden;
+    z-index: 100;
+    width: -webkit-fill-available;
+    }
