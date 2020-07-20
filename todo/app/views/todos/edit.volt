@@ -1,7 +1,9 @@
 <!-- 2020/07/08  Add Todos volt  by todo -->
 
 {{ content() }}
-
+<div class="page-header">
+    <h2>Todo</h2>
+</div>
 <ul class="pager">
     <li class="previous pull-left">
         {{ link_to("todos/index", "&larr; Go Back") }}
@@ -29,7 +31,7 @@
                         <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>"value="<?php echo $this->security->getToken() ?>"/>
                         <div class="form-group">
                             {{ submit_button('更新', 'class': 'btn btn-primary', 'onclick': 'return TodoTitle.validate();') }}
-                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#testModal"style="float: right;">削除</button>
+                            <!-- <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#testModal"style="float: right;">削除</button> -->
                         </div>
                     </fieldset>
                     </form>               
@@ -39,7 +41,7 @@
     </div>
 </div>
         
-<div class="modal fade" id="testModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+<!-- <div class="modal fade" id="testModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -54,4 +56,4 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->

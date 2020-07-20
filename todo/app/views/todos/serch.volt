@@ -1,4 +1,7 @@
 {{ content() }}
+<div class="page-header">
+    <h2>Todo</h2>
+</div>
 <ul class="pager">
     <li class="previous">
         {{ link_to("todos", "&larr; Go Back") }}

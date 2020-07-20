@@ -32,7 +32,8 @@
                                 <td>
                                     {% if todo.status == TODO_STATUS_ACTIVE %}
                                     <a class="btn btn-success" href="/todo/todos/done/{{ todo.id }}">完了</a>
-                                    <a class="btn btn-primary" href="/todo/todos/edit/{{ todo.id }}">編集</a>
+                                    <!-- <a class="btn btn-primary" href="/todo/todos/edit/{{ todo.id }}">編集</a> -->
+                                    <a class="btn btn-primary" href="/todo/todos/details/{{ todo.id }}">詳細</a>
                                     {% endif %}
                                 </td>
                             </tr>

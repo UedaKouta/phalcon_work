@@ -315,6 +315,65 @@ class TodosController extends ControllerBase
         $this->view->page = $paginator->getPaginate();
     }
 
+
+        /**
+     * タスク一覧表示
+     * @param string $statusparam 表示用タスク　ステータス
+     */
+    public function detailsAction($id = '')
+    {
+        $form = new TodosForm;
+        $serchform = new TodoSerchForm;
+
+        // if($statusparam == constant('TodosController::TODO_STATUS_ACTIVE') || $statusparam == constant('TodosController::TODO_STATUS_DONE')){
+        //     $status = $statusparam;
+        // } else{
+        //     $status = '';
+        // }
+
+        //statusにより検索条件となるパラメーターを取得
+        $numberPage = 1;
+        if ($id != '') {
+            $fx['id'] = $id;
+            $query = Criteria::fromInput($this->di, "Todo", $fx);
+            $this->persistent->searchParams = $query->getParams();
+        } else {
+            $numberPage = $this->request->getQuery("page", "int");
+        }
+
+        $parameters = array();
+        if ($this->persistent->searchParams) {
+            $parameters = $this->persistent->searchParams;
+        }
+
+        $todos = Todo::find($parameters);
+        if (count($todos) == 0) {
+            $this->flash->notice("The search did not find any task");
+
+            return $this->dispatcher->forward(
+                [
+                    "controller" => "todos",
+                    "action"     => "index",
+                ]
+            );
+        }
+
+        $paginator = new Paginator(array(
+            "data"  => $todos,
+            "limit" => 100,
+            "page"  => $numberPage
+        ));
+
+        $this->view->form = $form;
+        $this->view->serchform = $serchform;
+        $this->view->status = $status;
+        $this->view->TODO_STATUS_ALL = constant('TodosController::TODO_STATUS_ALL');
+        $this->view->TODO_STATUS_ACTIVE = constant('TodosController::TODO_STATUS_ACTIVE');
+        $this->view->TODO_STATUS_DONE = constant('TodosController::TODO_STATUS_DONE');
+     
+        $this->view->page = $paginator->getPaginate();
+    }
+
     /**
      * タスク一覧表示共通処理
      * @param string $datas タスク一覧処理のデータ
