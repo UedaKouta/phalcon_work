@@ -8,6 +8,16 @@
 .page-header {
     margin-top:70px;
 }
+.alert-danger {
+    margin-top: 60px;
+}
+
 .alert-info {
+    margin-top: 60px;
+}
+.alert-success {
+    margin-top: 60px;
+}
+.alert-warning {
     margin-top: 60px;
 }
