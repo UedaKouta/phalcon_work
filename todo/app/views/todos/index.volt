@@ -1,6 +1,8 @@
 <!-- 2020/07/08  Add Todos volt  by todo -->
 {{ content() }}
-
+<div class="page-header">
+    <h2>Todo</h2>
+</div>
 <div class="row">
     <div class="col-sm-8">
         <div class="panel panel-default">
