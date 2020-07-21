@@ -17,7 +17,7 @@
                                 <div class="controls">
                                  {{ form.render('title', ['class': 'form-control']) }}
                                  <div class="alert alert-warning" id="title_alert">
-                                    入力してください。
+                                    titleを入力してください。
                                  </div>
                                 </div>
                         </div>

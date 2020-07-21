@@ -234,8 +234,10 @@ class TodosController extends ControllerBase
 
             $form = new TodosForm;
             $title = $this->request->getPost('title', ['string', 'striptags']);
+            $detail = $this->request->getPost('detail', ['string', 'striptags']);
 
             $todo->title = $title ;
+            $todo->detail = $detail ;
             // $todo->updated = new Phalcon\Db\RawValue('now()');
 
             if ($todo->save() == false) {
@@ -403,6 +405,7 @@ class TodosController extends ControllerBase
         $this->view->form = $form;
         $this->view->serchform = $serchform;
         $this->view->status = $status;
+        $this->view->id = $id;
         $this->view->TODO_STATUS_ALL = constant('TodosController::TODO_STATUS_ALL');
         $this->view->TODO_STATUS_ACTIVE = constant('TodosController::TODO_STATUS_ACTIVE');
         $this->view->TODO_STATUS_DONE = constant('TodosController::TODO_STATUS_DONE');

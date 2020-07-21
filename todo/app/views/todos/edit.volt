@@ -18,7 +18,8 @@
                 <div class="panel-heading">更新</div>
                 <div class="panel-body">
                     {{ form('todos/register/' ~ id, 'id': 'registerForm', 'onbeforesubmit': 'return false') }}
-                    <fieldset>               
+                    <fieldset> 
+                        ID: {{ id }}              
                         <div class="form-group">
                             {{ form.label('title', ['class': 'control-label']) }}
                             <div class="controls">
@@ -28,10 +29,18 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group">
+                            {{ form.label('detail', ['class': 'control-label']) }}
+                                <div class="controls">
+                                 {{ form.render('detail', ['class': 'form-control']) }}
+                                 <div class="alert alert-warning" id="title_alert">
+                                    入力してください。
+                                 </div>
+                                </div>
+                        </div>
                         <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>"value="<?php echo $this->security->getToken() ?>"/>
                         <div class="form-group">
                             {{ submit_button('更新', 'class': 'btn btn-primary', 'onclick': 'return TodoTitle.validate();') }}
-                            <!-- <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#testModal"style="float: right;">削除</button> -->
                         </div>
                     </fieldset>
                     </form>               
@@ -40,20 +49,3 @@
         </div>
     </div>
 </div>
-        
-<!-- <div class="modal fade" id="testModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4>削除確認画面</h4></h4>
-            </div>
-            <div class="modal-body">
-                <label> ID:{{ id }}のデータを削除しますか？</label>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
-                <a class="btn btn-danger" href="/todo/todos/delete/{{ id }}">はい</a> 
-            </div>
-        </div>
-    </div>
-</div> -->
