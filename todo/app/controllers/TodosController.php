@@ -57,6 +57,39 @@ class TodosController extends ControllerBase
         $this->view->page = $paginator->getPaginate();
     }
 
+
+       /**
+     * タスク一覧表示
+     * @param string $statusparam 表示用タスク　ステータス
+     */
+    public function newAction()
+    {
+        $form = new TodosForm;
+        // $serchform = new TodoSerchForm;
+
+        // if($statusparam == constant('TodosController::TODO_STATUS_ACTIVE') || $statusparam == constant('TodosController::TODO_STATUS_DONE')){
+        //     $status = $statusparam;
+        // } else{
+        //     $status = '';
+        // }
+
+        // //statusにより検索条件となるパラメーターを取得
+        // $numberPage = 1;
+        // if ($status != '') {
+        //     $fx['status'] = $status;
+        //     $query = Criteria::fromInput($this->di, "Todo", $fx);
+        //     $this->persistent->searchParams = $query->getParams();
+        // } else {
+        //     $numberPage = $this->request->getQuery("page", "int");
+        // }
+
+        // //paginator取得共通処理
+        // $paginator  = $this->_paginatorTodos($this,$numberPage,$status);
+
+        $this->view->form = $form;
+     
+        // $this->view->page = $paginator->getPaginate();
+    }
      /**
      * タスク新規登録の処理
      */
@@ -69,10 +102,13 @@ class TodosController extends ControllerBase
 
             //csrf対策チェック　　2020/07/08 by todo
             if ($this->security->checkToken()) {
+
                 $title = $this->request->getPost('title', ['string', 'striptags']);
+                $detail = $this->request->getPost('detail', ['string', 'striptags']);
 
                 $todo = new Todo();
                 $todo->title = $title ;
+                $todo->detail = $detail ;
                 $todo->status = constant('TodosController::TODO_STATUS_ACTIVE');
                 $todo->created = new Phalcon\Db\RawValue('now()');
                 $todo->updated = new Phalcon\Db\RawValue('now()');

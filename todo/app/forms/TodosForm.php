@@ -25,5 +25,16 @@ class TodosForm extends Form
         ]);
         $this->add($title);
 
+        // detail
+        $detail = new TextArea('detail');
+        $detail->setLabel('Detail');
+        $detail->setFilters(['striptags', 'string']);
+        $detail->addValidators([
+            new PresenceOf([
+                'message' => 'detail is required'
+            ])
+        ]);
+        $this->add($detail);
+
     }
 }

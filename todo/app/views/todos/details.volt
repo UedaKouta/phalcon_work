@@ -16,20 +16,25 @@
 
                     
                     {% if page.items %}                                      
+             
                     <table class="table">
                         <thead>
                             <tr>
                                 <th>Id</th>
+                           
                                 <th>Title</th>
+                                <th>detail</th>
                                 <th>CreatedAt</th>
                             </tr>
                         </thead>
                         <tbody>
-                        {% for todo in page.items %}
+                            {% for todo in page.items %}
                             <tr>
                                 <td>{{ todo.id }}</td>
                                 <td>{{ todo.title }}</td>
+                                <td>{{ todo.detail }}</td>
                                 <td>{{ todo.created }}</td>
+                  
                                 <td>
                                     {% if todo.status == TODO_STATUS_ACTIVE %}
                                     <a class="btn btn-success" href="/todo/todos/done/{{ todo.id }}">完了</a>
