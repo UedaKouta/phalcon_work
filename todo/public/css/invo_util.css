@@ -25,3 +25,7 @@
 .nav-tabs {
     margin-top: 70px;
 }
+
+.subject-task {
+    border-bottom: solid 3px #C0C0C0;
+}
