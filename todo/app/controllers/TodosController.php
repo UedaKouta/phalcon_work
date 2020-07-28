@@ -58,38 +58,17 @@ class TodosController extends ControllerBase
     }
 
 
-       /**
-     * タスク一覧表示
+    /**
+     * 新規作成画面へ　遷移
      * @param string $statusparam 表示用タスク　ステータス
      */
     public function newAction()
     {
         $form = new TodosForm;
-        // $serchform = new TodoSerchForm;
-
-        // if($statusparam == constant('TodosController::TODO_STATUS_ACTIVE') || $statusparam == constant('TodosController::TODO_STATUS_DONE')){
-        //     $status = $statusparam;
-        // } else{
-        //     $status = '';
-        // }
-
-        // //statusにより検索条件となるパラメーターを取得
-        // $numberPage = 1;
-        // if ($status != '') {
-        //     $fx['status'] = $status;
-        //     $query = Criteria::fromInput($this->di, "Todo", $fx);
-        //     $this->persistent->searchParams = $query->getParams();
-        // } else {
-        //     $numberPage = $this->request->getQuery("page", "int");
-        // }
-
-        // //paginator取得共通処理
-        // $paginator  = $this->_paginatorTodos($this,$numberPage,$status);
-
         $this->view->form = $form;
      
-        // $this->view->page = $paginator->getPaginate();
     }
+    
      /**
      * タスク新規登録の処理
      */
@@ -190,7 +169,7 @@ class TodosController extends ControllerBase
      */
     public function editAction($id = '')
     {
-        $form = new TodosForm;
+        // $form = new TodosForm;
 
         $numberPage = 1;
         if ($id  != '') {
@@ -204,7 +183,11 @@ class TodosController extends ControllerBase
         //paginator取得共通処理      
         $paginator  = $this->_paginatorTodos($this,$numberPage,$status);
 
-        $this->view->form = $form;
+        new Todo();
+        $todo = Todo::findFirstById($id);
+
+        
+        $this->view->form = new TodosForm($todo, array('edit' => true));
         $this->view->id = $id;
         $this->view->page = $paginator->getPaginate();
     }
