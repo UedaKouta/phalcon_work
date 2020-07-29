@@ -58,17 +58,17 @@ class TodosController extends ControllerBase
     }
 
 
-    /**
-     * 新規作成画面へ　遷移
-     * @param string $statusparam 表示用タスク　ステータス
-     */
-    public function newAction()
-    {
-        $form = new TodosForm;
-        $this->view->form = $form;
+    // /**
+    //  * 新規作成画面へ　遷移
+    //  * @param string $statusparam 表示用タスク　ステータス
+    //  */
+    // public function newAction()
+    // {
+    //     $form = new TodosForm;
+    //     $this->view->form = $form;
      
-    }
-    
+    // }
+
      /**
      * タスク新規登録の処理
      */
@@ -117,8 +117,12 @@ class TodosController extends ControllerBase
                 );
                 return false;
             }
+        }else{
+
+            //Post以外の場合は、新規登録画面に遷移する。
+            $form = new TodosForm;
+            $this->view->form = $form;
         }
-        $this->view->form = $form;
     }
 
      /**
@@ -169,7 +173,6 @@ class TodosController extends ControllerBase
      */
     public function editAction($id = '')
     {
-        // $form = new TodosForm;
 
         $numberPage = 1;
         if ($id  != '') {
@@ -186,7 +189,6 @@ class TodosController extends ControllerBase
         new Todo();
         $todo = Todo::findFirstById($id);
 
-        
         $this->view->form = new TodosForm($todo, array('edit' => true));
         $this->view->id = $id;
         $this->view->page = $paginator->getPaginate();
@@ -345,12 +347,6 @@ class TodosController extends ControllerBase
     {
         $form = new TodosForm;
         $serchform = new TodoSerchForm;
-
-        // if($statusparam == constant('TodosController::TODO_STATUS_ACTIVE') || $statusparam == constant('TodosController::TODO_STATUS_DONE')){
-        //     $status = $statusparam;
-        // } else{
-        //     $status = '';
-        // }
 
         //statusにより検索条件となるパラメーターを取得
         $numberPage = 1;

@@ -54,7 +54,7 @@
                 <div class="panel-body">
 
                     <div align="left">
-                        {{ link_to("todos/new", "作成する", "class": "btn btn-primary") }}
+                        {{ link_to("todos/insert", "作成する", "class": "btn btn-primary") }}
                     </div>           
                 </div>
             </div>
