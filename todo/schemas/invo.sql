@@ -159,6 +159,7 @@ CREATE TABLE `todo` (
   `id` int(10) UNSIGNED NOT NULL  PRIMARY KEY  AUTO_INCREMENT,
   `title` varchar(120) COLLATE utf8_unicode_ci DEFAULT NULL,
   `detail` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `imgname` varchar(120) COLLATE utf8_unicode_ci DEFAULT NULL,
   `status` char(10) COLLATE utf8_unicode_ci NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP

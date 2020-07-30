@@ -3,6 +3,7 @@
 use Phalcon\Forms\Form;
 use Phalcon\Forms\Element\Text;
 use Phalcon\Forms\Element\TextArea;
+use Phalcon\Forms\Element\File;
 use Phalcon\Validation\Validator\PresenceOf;
 use Phalcon\Validation\Validator\Email;
 
@@ -35,6 +36,17 @@ class TodosForm extends Form
             ])
         ]);
         $this->add($detail);
+
+                // file
+                $img = new File('img');
+                $img->setLabel('img');
+                $img->setFilters(['striptags', 'string']);
+                $img->addValidators([
+                    new PresenceOf([
+                        'message' => 'detail is required'
+                    ])
+                ]);
+                $this->add($img);
 
     }
 }

@@ -39,6 +39,16 @@
                             <p>{{ todo.created }} </p>
                         </div>
                     </div>
+                    {% if todo.imgname %}  
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h4 class="subject-task">image</h4>
+                            {{ image("files/"~ todo.imgname,'width': '300') }}
+                        </div>
+                    </div>
+                    {% endif %}
+
+
                     <a class="btn btn-success" href="/todo/todos/done/{{ todo.id }}">完了</a>
                     <a class="btn btn-primary" href="/todo/todos/edit/{{ todo.id }}">編集</a>
                     <!-- <a class="btn btn-primary" href="/todo/todos/details/{{ todo.id }}">詳細</a> -->

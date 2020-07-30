@@ -17,7 +17,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">更新</div>
                 <div class="panel-body">
-                    {{ form('todos/register/' ~ id, 'id': 'registerForm', 'onbeforesubmit': 'return false') }}
+                    {{ form('todos/register/' ~ id, 'id': 'registerForm', 'onbeforesubmit': 'return false','enctype': 'multipart/form-data') }}
                     <fieldset> 
                         ID: {{ id }}              
                         <div class="form-group">
@@ -38,12 +38,24 @@
                                  </div>
                                 </div>
                         </div>
+
+                        <div class="form-group">
+                            {{ form.label('img', ['class': 'control-label']) }}
+                                <div class="controls">
+                                 {{ form.render('img') }}
+                                 <div class="alert alert-warning" id="title_alert">
+                                    入力してください。
+                                 </div>
+                                </div>
+                        </div>
+
                         <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>"value="<?php echo $this->security->getToken() ?>"/>
                         <div class="form-group">
                             {{ submit_button('更新', 'class': 'btn btn-primary', 'onclick': 'return TodoTitle.validate();') }}
                         </div>
                     </fieldset>
-                    </form>               
+                    </form>
+                    
                 </div>
             </div>
         </div>

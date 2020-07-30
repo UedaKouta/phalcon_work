@@ -82,12 +82,36 @@ class TodosController extends ControllerBase
             //csrf対策チェック　　2020/07/08 by todo
             if ($this->security->checkToken()) {
 
+                // if($this->request->hasFiles()){
+                //     //アップロードファイルがあるかどうかをチェックします。
+                //         $dir_path = APP_PATH.'files';
+                //         //画像を保管する場所、なければ作成
+                //         //mkdirは引数の２番目にアクセス制限を指定できます。
+                //         if(is_dir($dir_path) === false){
+                //             mkdir($dir_path);
+                //         }
+                        
+                //         foreach ($this->request->getUploadedFiles() as $file) {
+        
+                //             $image = uniqid(mt_rand(), true);//ファイル名をユニーク化
+                //             $image .= '.' . substr(strrchr($file->getName(), '.'), 1);//アップロードされたファイルの拡張子を取得
+                //             //アップロードされたファイルを取得し、移動させます。
+                //             $file->moveTo($dir_path. DIRECTORY_SEPARATOR . $image);
+                //         }
+                //     }
+             
+
                 $title = $this->request->getPost('title', ['string', 'striptags']);
                 $detail = $this->request->getPost('detail', ['string', 'striptags']);
+
+                    $imageName =$this->_uploadfile();
+
+               
 
                 $todo = new Todo();
                 $todo->title = $title ;
                 $todo->detail = $detail ;
+                $todo->imgname = $imageName;
                 $todo->status = constant('TodosController::TODO_STATUS_ACTIVE');
                 $todo->created = new Phalcon\Db\RawValue('now()');
                 $todo->updated = new Phalcon\Db\RawValue('now()');
@@ -184,7 +208,7 @@ class TodosController extends ControllerBase
         }
 
         //paginator取得共通処理      
-        $paginator  = $this->_paginatorTodos($this,$numberPage,$status);
+        $paginator  = $this->_paginatorTodos($this,$numberPage,'');
 
         new Todo();
         $todo = Todo::findFirstById($id);
@@ -204,6 +228,8 @@ class TodosController extends ControllerBase
         //csrf対策チェック　　2020/07/08 by todo
         if ($this->security->checkToken()) {
             
+
+
             new Todo();
             $todo = Todo::findFirstById($id);
             if (!$todo) {
@@ -216,6 +242,8 @@ class TodosController extends ControllerBase
                     ]
                 );
             }
+            
+            $imageName =$this->_uploadfile();
 
             $form = new TodosForm;
             $title = $this->request->getPost('title', ['string', 'striptags']);
@@ -223,6 +251,7 @@ class TodosController extends ControllerBase
 
             $todo->title = $title ;
             $todo->detail = $detail ;
+            $todo->imgname = $imageName;
             // $todo->updated = new Phalcon\Db\RawValue('now()');
 
             if ($todo->save() == false) {
@@ -381,10 +410,21 @@ class TodosController extends ControllerBase
             "page"  => $numberPage
         ));
 
+// Generate <img src="/your-app/img/hello.gif">
+echo $this->tag->image("img/hello.gif");
+
+// Generate <img alt="alternative text" src="/your-app/img/hello.gif">
+echo $this->tag->image(
+    array(
+       "img/hello.gif",
+       "alt" => "alternative text"
+    )
+);
+
         $this->view->form = $form;
         $this->view->serchform = $serchform;
-        $this->view->status = $status;
         $this->view->id = $id;
+        $this->view->FILEPATH  = APP_PATH.'files';
         $this->view->TODO_STATUS_ALL = constant('TodosController::TODO_STATUS_ALL');
         $this->view->TODO_STATUS_ACTIVE = constant('TodosController::TODO_STATUS_ACTIVE');
         $this->view->TODO_STATUS_DONE = constant('TodosController::TODO_STATUS_DONE');
@@ -420,4 +460,38 @@ class TodosController extends ControllerBase
         
         return $paginator;
     }
+
+
+      /**
+     * タスク検索処理
+     */
+    private function _uploadfile()
+    {
+        if($this->request->hasFiles()){
+            //アップロードファイルがあるかどうかをチェックします。
+                $dir_path = APP_PATH.'public/files';
+                //画像を保管する場所、なければ作成
+                //mkdirは引数の２番目にアクセス制限を指定できます。
+                if(is_dir($dir_path) === false){
+                    mkdir($dir_path);
+                }
+                
+                foreach ($this->request->getUploadedFiles() as $file) {
+
+                    $filename = $file->getName();
+                    
+                    if($filename != ''){
+                        $image = uniqid(mt_rand(), true);//ファイル名をユニーク化
+                        $image .= '.' . substr(strrchr($filename, '.'), 1);//アップロードされたファイルの拡張子を取得
+                        //アップロードされたファイルを取得し、移動させます。
+                        $file->moveTo($dir_path. DIRECTORY_SEPARATOR . $image);
+                    }else{
+                        $image = '';
+                    }
+
+                }
+            }
+            return $image;
+    }
+
 }
