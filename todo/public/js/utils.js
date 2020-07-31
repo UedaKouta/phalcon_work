@@ -81,3 +81,17 @@ $(document).ready(function () {
     $("#registerForm .alert").hide();
     $("div.profile .alert").hide();
 });
+
+
+// //アップロードを許可する拡張子
+// var allow_exts = new Array('jpg', 'jpeg', 'png');
+
+// //アップロード予定のファイル名の拡張子が許可されているか確認する関数
+// function checkExt(filename)
+// {
+// 	//比較のため小文字にする
+// 	var ext = getExt(filename).toLowerCase();
+// 	//許可する拡張子の一覧(allow_exts)から対象の拡張子があるか確認する
+// 	if (allow_exts.indexOf(ext) === -1) return false;
+// 	return true;
+// }

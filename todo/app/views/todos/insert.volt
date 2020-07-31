@@ -25,9 +25,6 @@
                             {{ form.label('detail', ['class': 'control-label']) }}
                                 <div class="controls">
                                  {{ form.render('detail', ['class': 'form-control']) }}
-                                 <div class="alert alert-warning" id="title_alert">
-                                    入力してください。
-                                 </div>
                                 </div>
                         </div>
 
@@ -35,9 +32,6 @@
                             {{ form.label('img', ['class': 'control-label']) }}
                                 <div class="controls">
                                  {{ form.render('img') }}
-                                 <div class="alert alert-warning" id="title_alert">
-                                    入力してください。
-                                 </div>
                                 </div>
                         </div>
 

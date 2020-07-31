@@ -57,18 +57,6 @@ class TodosController extends ControllerBase
         $this->view->page = $paginator->getPaginate();
     }
 
-
-    // /**
-    //  * 新規作成画面へ　遷移
-    //  * @param string $statusparam 表示用タスク　ステータス
-    //  */
-    // public function newAction()
-    // {
-    //     $form = new TodosForm;
-    //     $this->view->form = $form;
-     
-    // }
-
      /**
      * タスク新規登録の処理
      */
@@ -82,31 +70,11 @@ class TodosController extends ControllerBase
             //csrf対策チェック　　2020/07/08 by todo
             if ($this->security->checkToken()) {
 
-                // if($this->request->hasFiles()){
-                //     //アップロードファイルがあるかどうかをチェックします。
-                //         $dir_path = APP_PATH.'files';
-                //         //画像を保管する場所、なければ作成
-                //         //mkdirは引数の２番目にアクセス制限を指定できます。
-                //         if(is_dir($dir_path) === false){
-                //             mkdir($dir_path);
-                //         }
-                        
-                //         foreach ($this->request->getUploadedFiles() as $file) {
-        
-                //             $image = uniqid(mt_rand(), true);//ファイル名をユニーク化
-                //             $image .= '.' . substr(strrchr($file->getName(), '.'), 1);//アップロードされたファイルの拡張子を取得
-                //             //アップロードされたファイルを取得し、移動させます。
-                //             $file->moveTo($dir_path. DIRECTORY_SEPARATOR . $image);
-                //         }
-                //     }
-             
 
                 $title = $this->request->getPost('title', ['string', 'striptags']);
                 $detail = $this->request->getPost('detail', ['string', 'striptags']);
 
-                    $imageName =$this->_uploadfile();
-
-               
+                $imageName =$this->_uploadfile();
 
                 $todo = new Todo();
                 $todo->title = $title ;
@@ -243,16 +211,19 @@ class TodosController extends ControllerBase
                 );
             }
             
-            $imageName =$this->_uploadfile();
-
             $form = new TodosForm;
             $title = $this->request->getPost('title', ['string', 'striptags']);
             $detail = $this->request->getPost('detail', ['string', 'striptags']);
 
+            $imageName =$this->_uploadfile();
+
             $todo->title = $title ;
             $todo->detail = $detail ;
-            $todo->imgname = $imageName;
-            // $todo->updated = new Phalcon\Db\RawValue('now()');
+
+            if($imageName != ''){
+                unlink(APP_PATH.'public/files/'.$todo->imgname);
+                $todo->imgname = $imageName;
+            }
 
             if ($todo->save() == false) {
                 foreach ($todo->getMessages() as $message) {
@@ -324,7 +295,6 @@ class TodosController extends ControllerBase
         );
     }
 
-
      /**
      * タスク検索処理
      */
@@ -368,7 +338,7 @@ class TodosController extends ControllerBase
     }
 
 
-        /**
+    /**
      * タスク一覧表示
      * @param string $statusparam 表示用タスク　ステータス
      */
@@ -410,17 +380,6 @@ class TodosController extends ControllerBase
             "page"  => $numberPage
         ));
 
-// Generate <img src="/your-app/img/hello.gif">
-echo $this->tag->image("img/hello.gif");
-
-// Generate <img alt="alternative text" src="/your-app/img/hello.gif">
-echo $this->tag->image(
-    array(
-       "img/hello.gif",
-       "alt" => "alternative text"
-    )
-);
-
         $this->view->form = $form;
         $this->view->serchform = $serchform;
         $this->view->id = $id;
@@ -461,37 +420,36 @@ echo $this->tag->image(
         return $paginator;
     }
 
-
-      /**
-     * タスク検索処理
+    /**
+     * upload画像保存処理
      */
     private function _uploadfile()
     {
         if($this->request->hasFiles()){
+            
             //アップロードファイルがあるかどうかをチェックします。
-                $dir_path = APP_PATH.'public/files';
-                //画像を保管する場所、なければ作成
-                //mkdirは引数の２番目にアクセス制限を指定できます。
-                if(is_dir($dir_path) === false){
-                    mkdir($dir_path);
-                }
+            $dir_path = APP_PATH.'public/files';
+            //画像を保管する場所、なければ作成
+            //mkdirは引数の２番目にアクセス制限を指定できます。
+            if(is_dir($dir_path) === false){
+                mkdir($dir_path);
+            }
                 
-                foreach ($this->request->getUploadedFiles() as $file) {
+            foreach ($this->request->getUploadedFiles() as $file) {
 
-                    $filename = $file->getName();
+                $filename = $file->getName();                    
+                
+                if($filename != ''){
                     
-                    if($filename != ''){
-                        $image = uniqid(mt_rand(), true);//ファイル名をユニーク化
-                        $image .= '.' . substr(strrchr($filename, '.'), 1);//アップロードされたファイルの拡張子を取得
-                        //アップロードされたファイルを取得し、移動させます。
-                        $file->moveTo($dir_path. DIRECTORY_SEPARATOR . $image);
-                    }else{
-                        $image = '';
-                    }
-
+                    $image = uniqid(mt_rand(), true);//ファイル名をユニーク化
+                    $image .= '.' . substr(strrchr($filename, '.'), 1);//アップロードされたファイルの拡張子を取得
+                    //アップロードされたファイルを取得し、移動させます。
+                    $file->moveTo($dir_path. DIRECTORY_SEPARATOR . $image);
+                }else{
+                    $image = '';
                 }
             }
-            return $image;
+        }
+        return $image;
     }
-
 }
